@@ -1,0 +1,106 @@
+= Jeu de cartes Zheng Fen
+
+Complétez les informations ci-dessous.
+
+.Composition du groupe
+--
+* NOM1, Prénom1, no_étudiant, , login_github
+* NOM2, Prénom2, no_étudiant, , login_github
+* NOM3, Prénom3, no_étudiant, , login_github
+* NOM4, Prénom4, no_étudiant, , login_github
+--
+
+== Sujet
+L'objet de ce mini-projet est de développer le jeu de carte https://boardgamegeek.com/boardgame/70451/zheng-fen[zheng-fen] qui doit fonctionner en mode ligne de commande.
+La règle du jeu est disponible dans la https://boardgamegeek.com/filepage/205610/regles-en-francais-plus-aide-de-jeu[section _Files_] du site précédent.
+Ce document est une traduction française de la page https://www.pagat.com/climbing/zhengfen.html[Zheng Fen (挣分)].
+Ce jeu comporte de nombreuses variantes (https://www.pagat.com/climbing/doudizhu.html[Dou Dizhu (斗地主)], https://boardgamegeek.com/boardgame/215/tichu).
+
+Vous devrez respecter les contraintes techniques et fonctionnelles mentionnées ci-dessous.
+L'usage de bibliothèques tierces est autorisé.
+Ce qui n'est pas imposé par le sujet est laissé à votre libre interprétation.
+
+=== Contraintes techniques
+* Ce mini-projet est à réaliser en Java par groupe de 4 étudiants (3 ou 5 possibles avec accord de l'enseignant).
+  - les étudiants doivent coopérer à travers un même git (celui créé par _github classroom_).
+  Les contributions des participants (_commits_) doivent être équilibrées.
+* Il devra comporter une documentation dans ce fichier (cf. ci-dessous).
+  - La documentation devra décrire l'usage de l'application (_manuel utilisateur_) ainsi que la conception du jeu (_manuel technique_).
+* Vous utiliserez `git` en effectuant des commits réguliers comportant des messages informatifs.
+L'usage des branches est également exigé, attestant ainsi de votre collaboration au sein du groupe.
+La version finale de votre projet devra se trouver dans la branche `main`.
+* La version de Java à utiliser est la https://adoptium.net/[version 17] (ou plus récente).
+* Le _build_ sera assuré par _Maven_ et plus précisément _Maven wrapper_ (déjà intégré dans le projet).
+Aucune manipulation en dehors de Maven ne devra être nécessaire pour la compilation.
+* Le projet devra respecter les règles de codage Google (vérification par `checkstyle` déjà intégré dans le projet).
+* Des tests unitaires https://junit.org/junit5/docs/current/user-guide/[JUnit 5] devront être disponibles pour une part significative des méthodes développées.
+* Un outil de https://fr.wikipedia.org/wiki/Couverture_de_code[_Code Coverage_] devra être intégré au _build_
+* Les fonctionnalités du langage Java devront être utilisées au mieux (POO, exceptions, librairie de collections, I/O, …).
+* L'application devra pouvoir être exécutée à partir d'un `jar` incluant toutes les dépendances.
+* L'application fonctionnera dans un terminal (pas d'interface graphique).
+
+=== Description fonctionnelle
+L'application doit permettre de jouer de 0 à 4 joueurs humains, i.e. de zéro à quatre adversaires virtuels dénommés _Joueurs Virtuels_ (**JV**).
+Chaque JV joue grace à un _Moteur de Jeu_ (**MJ**) modélisé par une classe de votre programme.
+Un MJ peut appliquer une stratégie basique, ou bien jouer à l'aide de stratégies plus sophistiquées.
+Bien entendu, l'application doit gérer l'enchaînement des manches{empty}footnote:[Une manche se termine quand il ne reste des cartes qu'à un seul joueur (cf. la règle du jeu).] et les décomptes des points jusqu'à la fin du jeu{empty}footnote:[Le jeu se termine lorsqu'un joueur atteint ou dépasse un certain nombre de points (500 en général).].
+
+==== Interface de l'application
+L'interface textuelle devra
+* visualiser les actions de chaque joueur par des messages textuels clairs et concis (par exemple, "JV1: 🂮, 🂾, 🃎, 🃈, 🃘" ou "JV1: K(SHD), 8(DC)").
+* afficher chaque joueur et ses messages dans une couleur distincte.
+* valider les saisies des joueurs humains
+  - pour saisir une combinaison, le joueur utilisera une syntaxe du type `<Couleur>(<valeur1><valeur2>)` (par exemple "K(SHD), Q(DC)").
+* afficher le nombre de cartes de chaque joueur, mais pas ses valeurs de carte (sauf en mode débogage).
+* toujours afficher les cartes ordonnées du plus fort au plus faible et pique (_Spade_) avant cœur (_Heart_) avant carreau (_Diamond_) avant trèfle (_Club_).
+* afficher un message clair pour les actions effectuées par l'application.
+
+=== Contraintes à respecter
+* Un joueur peu décider d'abandonner. 
+C'est un événement rare (surtout chez les JV), mais possible.
+* L'historique d'une partie sera mémorisée dans une collection stockée dans un fichier.
+  - il sera donc possible de rejouer une partie ou d'afficher le déroulé d'une partie
+* Vous devez implementer un MJ appliquant une stratégie triviale.
+Le MJ se débarrasse de ses cartes au fur et à mesure sans aucun assemblage.
+* Vous devez également implémenter au moins un MJ qui joue de manière plus sophistiquée.
+* Un mode débogage permettra de jouer à jeux ouverts.
+* Le MJ associé à chaque JV doit pouvoir être modifié.
+* Une interface de configuration permettra de modifier les paramètres du jeu (variantes, nombre de points pour gagner, ...)
+
+== Références
+* https://github.com/lyudaio/jcards[jCards] - A Lightweight Java Library for manipulating Playing Cards
+* Quelques bibliothèques:
+http://fusesource.github.io/jansi/[JAnsi] (couleur dans un terminal),
+https://github.com/jline/jline3[JLine] (gestion des saisies)
+
+=== Manuel utilisateur
+
+> Comment sont gérés les différents utilisateurs ?
+> Décrire la technique utilisée pour décider comment les JV décident l'assemblage des cartes ?
+> Y a-t'il possibilité qu'un joueur change d'assemblage de cartes en cours de parties et dans tout les cas décrire le pourquoi et le comment ? 
+> Quelles évolutions peut-on envisager ?
+
+=== Manuel technique
+==== Compiler le projet
+.Sous Linux
+----
+$ JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64/ ./mvnw package
+----
+
+.Sous Windows
+----
+> mvnw.cmd package
+----
+
+=== Exécuter l'application
+----
+$ java -jar target/zhangyao-1.0.jar
+----
+
+> À compléter :
+> Comment consulter le rapport de couverture de code par les tests ?
+> Quelles bibliothèques ont été utilisées et pourquoi ?
+> Quel est le rôle des différentes classes ?
+> Quels design patterns sont utilisés et pourquoi ?
+> Quels traitements sont réalisés pour gérer une commande saisie par l'utilisateur ? Donnez un exemple.
+> Quelles améliorations peut-on envisager ?
