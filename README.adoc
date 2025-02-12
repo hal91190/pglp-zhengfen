@@ -10,11 +10,12 @@
 
 L'objet de ce mini-projet est de développer le jeu de carte https://boardgamegeek.com/boardgame/70451/zheng-fen[zheng-fen] qui doit fonctionner en mode ligne de commande.
 La règle du jeu est disponible dans la https://boardgamegeek.com/filepage/205610/regles-en-francais-plus-aide-de-jeu[section _Files_] du site précédent.
-Ce document est une traduction française de la page https://www.pagat.com/climbing/zhengfen.html[Zheng Fen (挣分)].
+Cette dernière est une traduction française de la page https://www.pagat.com/climbing/zhengfen.html[Zheng Fen (挣分)].
 Ce jeu comporte de nombreuses variantes (https://www.pagat.com/climbing/doudizhu.html[Dou Dizhu (斗地主)], https://boardgamegeek.com/boardgame/215/tichu[Tichu]).
 
 [IMPORTANT]
 ====
+* **L'objectif de ce projet est de travailler la conception objet**. Donc, plus que les fonctionnalités, vous prêterez une attention particulière aux choix de conception qui devront être argumentés.
 * Vous devrez respecter les contraintes techniques et fonctionnelles mentionnées ci-dessous.
 * L'usage de bibliothèques tierces est autorisé.
 * Ce qui n'est pas imposé par le sujet est laissé à votre libre interprétation.
@@ -50,6 +51,7 @@ Bien entendu, l'application doit gérer l'enchaînement des manches{empty}footno
 L'interface textuelle devra
 
 * visualiser les actions de chaque joueur par des messages textuels clairs et concis (par exemple, "JV1: 🂮, 🂾, 🃎, 🃈, 🃘" ou "JV1: K(SHD), 8(DC)").
+  - où les valeurs et les couleurs des cartes sont données par leurs initiales en anglais (**K**ing = roi, **Q**ueen = dame, **J**ack = valet, **S**pade = pique, **H**eart = cœur, **D**iamond = carreau et **C**lub = trèfle).
 * afficher chaque joueur et ses messages dans une couleur distincte.
 * valider les saisies des joueurs humains
   - pour saisir une combinaison, le joueur utilisera une syntaxe du type `<Valeur>(<couleur1><couleur2>)` (par exemple "K(SHD), Q(DC)").
